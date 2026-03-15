@@ -1,0 +1,23 @@
+[rows, cols] = size(adjustBrightness);
+fprintf('\n--- ASCII Art Output ---\n\n');
+
+for i = 1:rows
+    % Pre-allocate a character array for the current line for speed
+    lineChars = char(zeros(1, cols)); 
+    
+    for j = 1:cols
+        % Get pixel value (0 to 1)
+        pixelVal = adjustBrightness(i, j);
+        
+        % Map pixel to index (1 to numChars)
+        % Using 'round' or 'ceil' and 'min/max' prevents index-out-of-bounds
+        charIdx = round(pixelVal * (numChars - 1)) + 1;
+        charIdx = max(1, min(numChars, charIdx));
+        
+        % Assign the character
+        lineChars(j) = charImg(charIdx);
+    end
+    % Print the full line at once
+    fprintf('%s\n', lineChars);
+end
+fprintf('\n--- End of Art ---\n');
